@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Title</title>
+</head>
+<body>
+<h1> RESULTADOS DEL API GET </h1>
+<div>
+  <p id="resultsApi"></p>
+</div>
+
+<h1> RESULTADOS DEL API POST </h1>
+
+<div>
+  <p id="resultsPost"></p>
+</div>
+
+
+<h1> RESULTADOS DE LA SUMA </h1>
+
+<div>
+  <p id="resultsSuma"></p>
+</div>
+
+<script>
+  fetch('http://127.0.0.1:8000/v1/get_names')
+      .then(response => response.json())
+      .then(data => {
+        document.getElementById('resultsApi').innerText = data.nombre
+      });
+
+  const data = {"nombre": "Jorge", "Apellido": "Napster"}
+  fetch('http://127.0.0.1:8000/v1/upload_names', {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json'
+    },
+    body: JSON.stringify(data)
+  })
+      .then(response => response.json())
+      .then(data => {
+        document.getElementById('resultsPost').innerText = `${data.message} se ha registrado correctamente`
+      });
+
+  const number = "d";
+  fetch(`http://127.0.0.1:8000/v1/suma_numeros?number=${number}`, {
+    method: 'POST'
+  })
+      .then(response => response.json())
+      .then(data => {
+        document.getElementById('resultsSuma').innerText = `la suma es: ${data.message}`
+      })
+  localStorage.setItem("value", "jorge")
+</script>
+
+
+</body>
+</html>
